@@ -25,7 +25,7 @@ def build_following_graph (follower):
         rel = Relationship(follower_node, "FOLLOWING", following_node)
         graph.merge(rel)
 
-def build_following_for_all_users:
+def build_following_for_all_users():
     print ("Getting all user names")
     all_users = info.get_all_usernames()
     iteration = 0

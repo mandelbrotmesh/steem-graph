@@ -17,15 +17,15 @@ def get_sqliteversion():
         if con:
             con.close()
 
-def setup_user_database():
-    con = db.connect("steemit-local.db")
+def setup_user_database(database_name):
+    con = db.connect(database_name)
     with con:
         cur = con.cursor()
         cur.execute("CREATE TABLE IF NOT EXISTS USER(id INTEGER PRIMARY KEY AUTOINCREMENT, username varchar(20));")
         con.commit()
 
-def create_user(username):
-    con = db.connect("steemit-local.db")
+def create_user(username, database_name):
+    con = db.connect(database_name)
     with con:
         cur = con.cursor()
         cur.execute("""INSERT INTO USER(username)
@@ -33,8 +33,8 @@ def create_user(username):
             WHERE NOT EXISTS(SELECT 1 FROM USER WHERE username = ?);""", (username, username))
         con.commit()
 
-def get_user_list(start_index, count):
-    con = db.connect("steemit-local.db")
+def get_user_list(start_index, count, database_name):
+    con = db.connect(database_name)
     with con:
         cur = con.cursor()
         cur.execute("SELECT id, username FROM USER WHERE id >= ? LIMIT ?", (start_index, count))
@@ -42,8 +42,8 @@ def get_user_list(start_index, count):
         for user_id, user in users:
             yield (user_id, user)
 
-def get_user_count():
-    con = db.connect("steemit-local.db")
+def get_user_count(database_name):
+    con = db.connect(database_name)
     with con:
         cur = con.cursor()
         cur.execute("SELECT COUNT(*) FROM USER")

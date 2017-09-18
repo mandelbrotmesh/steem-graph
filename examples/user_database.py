@@ -27,6 +27,7 @@ for user in db.get_user_list(1, 100, database_name):
 # GET THE LIST OF STEEMIT USERS
 # AND ADD THEM TO THE DATABASE
 
+print("Creating the steemit users.")
 STEEMIT = Steem()
 ALL_USERS_LIST = STEEMIT.get_all_usernames()
 for user in ALL_USERS_LIST:
